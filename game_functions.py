@@ -4,20 +4,46 @@ import pygame
 from wall import Wall
 from pacman import Pacman
 
-def check_keydown_events(event):
+def check_keydown_events(event, ai_settings, pacman, time_new):
 	if event.key == pygame.K_q:
 		pygame.quit()
 		sys.exit()
+	if event.key == pygame.K_w and (not pacman.movement_down and not pacman.movement_left and not pacman.movement_right):
+		pacman.movement_up = True
+		pacman.face_direction(event, ai_settings, time_new)
+		ai_settings.pacman_time_move = time_new
+	elif event.key == pygame.K_s and (not pacman.movement_up and not pacman.movement_left and not pacman.movement_right):
+		pacman.movement_down = True
+		pacman.face_direction(event, ai_settings, time_new)
+		ai_settings.pacman_time_move = time_new
+	elif event.key == pygame.K_a and (not pacman.movement_up and not pacman.movement_down and not pacman.movement_right):
+		pacman.movement_left = True
+		pacman.face_direction(event, ai_settings, time_new)
+		ai_settings.pacman_time_move = time_new
+	elif event.key == pygame.K_d and (not pacman.movement_up and not pacman.movement_down and not pacman.movement_left):
+		pacman.movement_right = True
+		pacman.face_direction(event, ai_settings, time_new)
+		ai_settings.pacman_time_move = time_new
 	
-#def check_keyup_events(event):
+def check_keyup_events(event, ai_settings, pacman):
+	if event.key == pygame.K_w:
+		pacman.movement_up = False
+	elif event.key == pygame.K_s:
+		pacman.movement_down = False
+	elif event.key == pygame.K_a:
+		pacman.movement_left = False
+	elif event.key == pygame.K_d:
+		pacman.movement_right = False
 	
-def check_events():
+def check_events(ai_settings, pacman, time_new):
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
 		if event.type == pygame.KEYDOWN:
-			check_keydown_events(event)
+			check_keydown_events(event, ai_settings, pacman, time_new)
+		if event.type == pygame.KEYUP:
+			check_keyup_events(event, ai_settings, pacman)
 		
 		
 
@@ -48,8 +74,6 @@ def create_wall(ai_settings, screen, walls, center_wall, column_number, row_numb
 	new_wall.centerx = wall_get_x(ai_settings, new_wall.rect, column_number, center_wall)
 	new_wall.centery = wall_get_y(ai_settings, new_wall.rect, row_number, center_wall)
 	walls.add(new_wall)
-	print("potato")
-	print(len(walls))
 
 def get_center_wall(ai_settings, screen):
 	screen_rect = screen.get_rect()
@@ -120,46 +144,4 @@ def update_screen(ai_settings, screen, pacman, balls, walls):
 
 
 
-"""
-ol = ['W', 'W', 'R', 'W', 'W', 'W', 'L']
 
-#  Up Right movement
-if ol.count('W') >= 2 and ol.count('R') >= 1:
-	ol.remove('W')
-	ol.remove('R')
-	ol.remove('W')
-
-# Down Left movement
-if ol.count('W') >= 2 and ol.count('L') >= 2:
-	ol.remove('L')
-	ol.remove('W')
-	ol.remove('L')
-	ol.remove('W')
-
-# Up Left movement
-if ol.count('W') >= 2 and ol.count('L') >= 1:
-	ol.remove('W')
-	ol.remove('L')
-	ol.remove('W')
-
-# Down Right Movement
-if ol.count('W') >= 2 and ol.count('R') >= 2:
-	ol.remove('R')
-	ol.remove('W')
-	ol.remove('R')
-	ol.remove('W')
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
