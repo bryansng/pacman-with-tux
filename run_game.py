@@ -1,11 +1,18 @@
 import pygame
 from pygame.sprite import Group
+import time
+from time import process_time
 
 from settings import Settings
 import game_functions as gf
 from pacman import Pacman
 from ball import Ball
 from wall import Wall
+
+def get_process_time():
+	# Returns the process time at the time of request or call of this method.
+	process_time = time.process_time()
+	return process_time
 
 def run_game():
 	pygame.init()
@@ -23,7 +30,9 @@ def run_game():
 	gf.create_walls(ai_settings, screen, walls)
 	
 	while True:
-		gf.check_events()
+		time_new = float('{:.1f}'.format(get_process_time()))
+		
+		gf.check_events(pacman, time_new)
 		
 		gf.update_internals(ai_settings, screen, pacman, balls, walls)
 		
