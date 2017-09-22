@@ -25,7 +25,7 @@ def run_game():
 	
 	# Initialize screen using width and height from ai_settings.
 	screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
-	# Setting the game name
+	# Setting the game name.
 	pygame.display.set_caption("Pac-man with Tux")
 	
 	# Initialize all other game settings.
