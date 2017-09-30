@@ -42,7 +42,7 @@ def run_game():
 		time_new = float('{:.1f}'.format(get_process_time()))
 		
 		# Handles all the events in the game and invokes functions based on those events.
-		gf.check_events(ai_settings, pacman, time_new)
+		gf.check_events(ai_settings, screen, pacman, time_new)
 		
 		# Handles all the internals of the objects in the game and invokes functions based on certain events.
 		gf.update_internals(ai_settings, screen, pacman, balls, walls)

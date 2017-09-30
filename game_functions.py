@@ -4,10 +4,12 @@ import pygame
 from wall import Wall
 from pacman import Pacman
 
-def check_keydown_events(event, ai_settings, pacman, time_new):
+def check_keydown_events(event, ai_settings, screen, pacman, time_new):
 	if event.key == pygame.K_q:
 		pygame.quit()
 		sys.exit()
+	if event.key == pygame.K_m:
+		pacman.randomize_and_move_to_point(ai_settings, screen, time_new)
 	if event.key == pygame.K_w and (not pacman.movement_down and not pacman.movement_left and not pacman.movement_right):
 		pacman.movement_up = True
 		pacman.face_direction(event, ai_settings, time_new)
@@ -35,13 +37,13 @@ def check_keyup_events(event, ai_settings, pacman):
 	elif event.key == pygame.K_d:
 		pacman.movement_right = False
 	
-def check_events(ai_settings, pacman, time_new):
+def check_events(ai_settings, screen, pacman, time_new):
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
 		if event.type == pygame.KEYDOWN:
-			check_keydown_events(event, ai_settings, pacman, time_new)
+			check_keydown_events(event, ai_settings, screen, pacman, time_new)
 		if event.type == pygame.KEYUP:
 			check_keyup_events(event, ai_settings, pacman)
 		
